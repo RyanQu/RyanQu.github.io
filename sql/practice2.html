@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="EN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SQL Practice</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.1/codemirror.min.css" />
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      body { 
+        padding-top: 70px; 
+      }
+      .navbar-brand { margin-left: 6px; }
+      .code-pre { 
+        margin-bottom: 0px; 
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+      }
+      .remove-round {
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+      }
+      .code-box {
+        border: 1px;
+      }
+      .result {
+        border: 1px;
+      }
+      .db_model {
+        width: 100%;
+      }
+      pre.prettyprint {
+        background-color: #eee;
+      }
+      .kwd {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">SQL Practice For MIS</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Introduction</a></li>
+            <li><a href="class.html">Class</a></li>
+            <li><a href="practice1.html">Practice 1</a></li>
+            <li class="active"><a href="practice2.html">Practice 2<span class="sr-only">(current)</span></a></li>
+            <li><a href="#" title="Not Available Now" data-toggle="tooltip" data-placement="bottom">Exam</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://ryanqu.com">Powered by Yuan Qu</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="container">
+        <h1>The Database Model</h1>
+        <img src="practice2.png" alt="" class="db_model img-thumbnail">
+        <p id="db_status">The databse and all the tables are created.</p>
+        <p>First, you could use <code>SHOW tables;</code> to check the existing tables, and then <code>SELECT * FROM ...</code> to see the data records.</p>
+        <p>For the following questions, refer to the above database, which shows college enrollments for a single semester. The gender field in the Students table contains “M” for males and “F” for females, and the grade field in the Enrolls table contains a numerical grade, such as 4.0 for an “A”, 3.0 for a “B”, and so forth. Departments in the Courses table are identified by their names, which are unique.</p>
+        <h3>Questions:</h3>
+        <p><strong>Q1. </strong>Assuming a fee of $450 per credit, write a SQL query to calculate each student’s tuition. It should show each student’s student number, name, and total tuition for the semester.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button></p>
+        <p><strong>Q2. </strong>Write a SQL query to find all students whose GPA’s are below 2. number, name, and GPA for each such student.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
+        <p><strong>Q3. </strong>Write a SQL query to find the number of female enrollments in each department. The same woman signing up for two different courses in the same department counts as two separate enrollments. The query should show the name of each department and its number of female enrollments, and it should be sorted from largest to smallest number of enrollments, largest first.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
+
+        <div class="modal fade" id="q1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Q1</h5>
+              </div>
+              <div class="modal-body" id="q1"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="q2_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Q2</h5>
+              </div>
+              <div class="modal-body" id="q2"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="q3_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Q3</h5>
+              </div>
+              <div class="modal-body" id="q3"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div class="border col-md-4">
+          <h4>Input your SQL code here:</h4>
+          <form>
+            <div class="form-group">
+              <textarea id="sql" class="form-control">SELECT * FROM students;</textarea>
+              <button type="button" class="btn btn-primary" onclick="execute_sql()">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-8">
+          <h4>Result of your query:</h4>
+          <div class="border" id="result">
+            <table class="table table-striped table-bordered table-hover">
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.1/mode/sql/sql.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=sql"></script>
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("sql"), {
+        lineNumbers: true,
+        lineWrapping: true,
+        mode: "sql"
+      });
+      $(".CodeMirror-scroll").hover(function(){
+          $(this).get(0).style.cursor = "text";
+      });
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    </script>
+    <script>
+      var tm = Date.now();
+      var db = new alasql.Database();
+      alasql.options.errorlog = true;
+      $.get('practice2.sql', function(data) {
+        document.getElementById('db_status').innerHTML = "The database is successfully loaded!";
+        data.split(';').forEach(function (sql) {
+          sql = sql.trim();
+          if (sql) {
+            db.exec(sql);
+          };
+        });
+
+        var q_sql = [
+          "SELECT S.student_num, student_name, SUM(num_credits)*450 AS Tuition FROM students AS S, courses AS C, enrolls AS E, sections as Sec WHERE S.student_num = E.student_num AND E.section_id = Sec.section_id AND C.course_num = Sec.course_num GROUP BY S.student_num, student_name;", 
+          "SELECT S.student_num, student_name, SUM(grade*num_credits)/SUM(num_credits) AS GPA FROM students AS S, enrolls AS E, courses AS C, sections as Sec WHERE S.student_num = E.student_num AND E.section_id = Sec.section_id AND C.course_num = Sec.course_num GROUP BY S.student_num, student_name HAVING SUM(grade*num_credits)/SUM(num_credits) < 2;",
+          "SELECT department, COUNT(S.student_num) AS total_women FROM courses AS C, enrolls AS E, students AS S, sections AS Sec WHERE gender = 'F' AND S.student_num = E.student_num AND E.section_id = Sec.section_id AND C.course_num = Sec.course_num GROUP BY department ORDER BY COUNT(S.student_num) DESC;"
+        ];
+
+        for (var i=0;i<q_sql.length;i++){
+          sql = q_sql[i].trim();
+          try{res = db.exec(sql);}
+          catch(err){console.log(err)}
+          document.getElementById('q'+(i+1).toString()).innerHTML = display_table(res);
+        };
+      }, 'text');
+      
+      function display_table(res) {
+        var s = '';
+        s += '<table class="table table-striped table-bordered table-hover">';
+        s += '<tr>';
+        for (key in res[0]) {
+          s += '<th>' + key + '</th>';
+        };
+        s += '</tr>';
+        res.forEach(function (row) {
+          s += '<tr>';
+          for (key in row) {
+              s += '<td>' + (typeof row[key] == 'undefined' ? '' : row[key]) + '</td>';
+          };
+          s += '</tr>';
+        });
+        s += '</table>';
+        return s
+      };
+      function execute_sql() {
+        var s = '';
+        var sqls = editor.getValue();
+        sqls.split(';').forEach(function (sql) {
+          sql = sql.trim();
+          if (sql) {
+            try{
+              var res = db.exec(sql);
+            }
+            catch(err){
+              document.getElementById('result').innerHTML = err;
+            }
+            s += display_table(res);
+          };
+        })
+        document.getElementById('result').innerHTML = s;
+      };
+    </script>
+  </body>
+</html>
