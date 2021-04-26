@@ -94,7 +94,9 @@
               <div class="modal-header">
                 <h5 class="modal-title">Q1</h5>
               </div>
-              <div class="modal-body" id="q1"></div>
+              <div class="modal-body" id="q1">
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductName</th><th>ProductUnitPrice</th><th>UnitsInStock</th><th>ReorderLevel</th><th>UnitStatus</th></tr><tr><td>Apple</td><td>1.49</td><td>100</td><td>50</td><td>50</td></tr><tr><td>Banana</td><td>0.69</td><td>50</td><td>50</td><td>0</td></tr><tr><td>Cherry</td><td>3.99</td><td>20</td><td>60</td><td>-40</td></tr><tr><td>Computer</td><td>99.99</td><td>100</td><td>100</td><td>0</td></tr><tr><td>Donut</td><td>0.99</td><td>40</td><td>40</td><td>0</td></tr><tr><td>Egg</td><td>1.99</td><td>50</td><td>50</td><td>0</td></tr><tr><td>Fries</td><td>4.99</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Grape</td><td>3.99</td><td>100</td><td>0</td><td>100</td></tr><tr><td>Hat</td><td>12.99</td><td>10</td><td>10</td><td>0</td></tr><tr><td>Ink</td><td>4.99</td><td>20</td><td>0</td><td>20</td></tr><tr><td>Jacket</td><td>29.99</td><td>20</td><td>0</td><td>20</td></tr><tr><td>Kimchi</td><td>5.99</td><td>40</td><td>0</td><td>40</td></tr><tr><td>Lasagne</td><td>5.99</td><td>100</td><td>50</td><td>50</td></tr></tbody></table>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
@@ -108,7 +110,9 @@
               <div class="modal-header">
                 <h5 class="modal-title">Q2</h5>
               </div>
-              <div class="modal-body" id="q2"></div>
+              <div class="modal-body" id="q2">
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>TotalOrders</th><th>SalesRepID</th><th>FirstName</th><th>LastName</th></tr><tr><td>2</td><td>2014</td><td>Jesse</td><td>Lingard</td></tr><tr><td>2</td><td>2027</td><td>Alex</td><td>Telles</td></tr><tr><td>1</td><td>2017</td><td>Bruno</td><td>Fernandes</td></tr><tr><td>1</td><td>2021</td><td>Daniel</td><td>James</td></tr><tr><td>1</td><td>2029</td><td>Aaron</td><td>Wan-Bissaka</td></tr><tr><td>1</td><td>2033</td><td>Brandon</td><td>Williams</td></tr></tbody></table>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
@@ -122,7 +126,9 @@
               <div class="modal-header">
                 <h5 class="modal-title">Q3</h5>
               </div>
-              <div class="modal-body" id="q3"></div>
+              <div class="modal-body" id="q3">
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductName</th><th>ProductUnitPrice</th><th>UnitsOnOrder</th><th>ValueOnOrder</th></tr><tr><td>Apple</td><td>1.49</td><td>20</td><td>29.8</td></tr><tr><td>Banana</td><td>0.69</td><td>50</td><td>34.5</td></tr><tr><td>Cherry</td><td>3.99</td><td>40</td><td>159.6</td></tr><tr><td>Donut</td><td>0.99</td><td>20</td><td>19.8</td></tr><tr><td>Egg</td><td>1.99</td><td>50</td><td>99.5</td></tr><tr><td>Grape</td><td>3.99</td><td>50</td><td>199.5</td></tr><tr><td>Ink</td><td>4.99</td><td>20</td><td>99.8</td></tr><tr><td>Jacket</td><td>29.99</td><td>60</td><td>1799.4</td></tr><tr><td>Lasagne</td><td>5.99</td><td>50</td><td>299.5</td></tr></tbody></table>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
@@ -136,7 +142,9 @@
               <div class="modal-header">
                 <h5 class="modal-title">Q4</h5>
               </div>
-              <div class="modal-body" id="q4"></div>
+              <div class="modal-body" id="q4">
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductID</th><th>ProductName</th><th>TotalOrderAmount</th></tr><tr><td>8001</td><td>Apple</td><td>22.35</td></tr><tr><td>8002</td><td>Banana</td><td>6.9</td></tr><tr><td>8003</td><td>Cherry</td><td>15.96</td></tr><tr><td>8004</td><td>Donut</td><td>5.94</td></tr><tr><td>8005</td><td>Egg</td><td>17.91</td></tr><tr><td>8006</td><td>Fries</td><td>29.94</td></tr><tr><td>8007</td><td>Grape</td><td>31.92</td></tr><tr><td>8008</td><td>Hat</td><td>25.98</td></tr><tr><td>8009</td><td>Ink</td><td>19.96</td></tr><tr><td>8010</td><td>Jacket</td><td>29.99</td></tr><tr><td>8012</td><td>Lasagne</td><td>5.99</td></tr></tbody></table>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
@@ -205,20 +213,6 @@
             db.exec(sql);
           };
         });
-
-        var q_sql = [
-          "SELECT ProductName, ProductUnitPrice, UnitsInStock, ReorderLevel, (UnitsInStock-ReorderLevel) AS UnitStatus FROM products ORDER BY ProductName ASC;", 
-          "SELECT COUNT(OrderID) AS TotalOrders, O.SalesRepID, FirstName, LastName FROM orders AS O, sales_reps AS S WHERE O.SalesRepID = S.SalesRepID AND OrderDate BETWEEN '2021-01-15' AND '2021-01-22' GROUP BY O.SalesRepID, FirstName, LastName ORDER BY COUNT(OrderID) DESC;",
-          "SELECT ProductName, ProductUnitPrice, UnitsOnOrder, ROUND(UnitsOnOrder*ProductUnitPrice, 2) AS `ValueOnOrder` FROM products WHERE UnitsOnOrder > 0;", 
-          "SELECT O.ProductID, P.ProductName, ROUND(SUM(Quantity*UnitPrice),2) AS `TotalOrderAmount` FROM products AS P, products_orders AS O WHERE P.ProductID=O.ProductID GROUP BY O.ProductID, P.ProductName HAVING SUM(Quantity*UnitPrice) <= 1000;"
-        ];
-
-        for (var i=0;i<q_sql.length;i++){
-          sql = q_sql[i].trim();
-          try{res = db.exec(sql);}
-          catch(err){console.log(err)}
-          document.getElementById('q'+(i+1).toString()).innerHTML = display_table(res);
-        };
       }, 'text');
       
       function display_table(res) {
