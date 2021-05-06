@@ -33,6 +33,9 @@
       .result {
         border: 1px;
       }
+      .db_model {
+        width: 100%;
+      }
       pre.prettyprint {
         background-color: #eee;
       }
@@ -57,9 +60,9 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Introduction</a></li>
             <li><a href="class.html">Class</a></li>
-            <li><a href="practice1.html">Practice 1</a></li>
-            <li><a href="practice2.html">Practice 2</a></li>
-            <li class="active"><a href="exam.html">Exam<span class="sr-only">(current)</span></a></li>
+            <li><a href="final1.html">Final Exam 1</a></li>
+            <li class="active"><a href="final2.html">Final Exam 2<span class="sr-only">(current)</span></a></li>
+            <li><a href="exam2.html">Exam II</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://ryanqu.com">Powered by Yuan Qu</a></li>
@@ -70,20 +73,14 @@
     <div class="row">
       <div class="container">
         <h1>The Database Model</h1>
-        <img src="exam.png" alt="" class="db_model img-thumbnail">
+        <img src="practice2.png" alt="" class="db_model img-thumbnail">
         <p id="db_status">The databse and all the tables are created.</p>
         <p>First, you could use <code>SHOW tables;</code> to check the existing tables, and then <code>SELECT * FROM ...</code> to see the data records.</p>
+        <p>For the following questions, refer to the above database, which shows college enrollments for a single semester. The gender field in the Students table contains “M” for males and “F” for females, and the grade field in the Enrolls table contains a numerical grade, such as 4.0 for an “A”, 3.0 for a “B”, and so forth. Departments in the Courses table are identified by their names, which are unique.</p>
         <h3>Questions:</h3>
-        <p><strong>Q1. </strong>List the films where the <code>yr</code> is <code>1962</code> [Show id, title]. 
-          <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button>
-        </p>
-        
-        <p><strong>Q2. </strong>List all of the <code>Star Trek</code> movies, include the <code>id</code>, <code>title</code> and <code>yr</code> (all of these movies include the words <code>Star Trek</code> in the <code>title</code>). Order results by year.
-          <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button>
-        </p>
-        
-        <p><strong>Q3. </strong>List the films in which <code>Leonardo DiCaprio</code> has appeared.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
-        <p><strong>Q4: </strong>List all the people who have worked with <code>Tom Hanks</code>.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q4_modal"> Desired Result</button></p>
+        <p><strong>Q1. </strong>Assuming a fee of $450 per credit, write a SQL query to calculate each student’s tuition. It should show each student’s student number, name, and total tuition for the semester.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button></p>
+        <p><strong>Q2. </strong>Write a SQL query to find all students whose GPA’s are below 2. number, name, and GPA for each such student.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
+        <p><strong>Q3. </strong>Write a SQL query to find the number of female enrollments in each department. The same woman signing up for two different courses in the same department counts as two separate enrollments. The query should show the name of each department and its number of female enrollments, and it should be sorted from largest to smallest number of enrollments, largest first.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
 
         <div class="modal fade" id="q1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -92,13 +89,7 @@
                 <h5 class="modal-title">Q1</h5>
               </div>
               <div class="modal-body" id="q1">
-                <table class="table table-striped table-bordered table-hover">
-                  <tbody>
-                    <tr><th>id</th><th>title</th></tr>
-                    <tr><td>6</td><td>The Longest Day</td></tr>
-                    <tr><td>7</td><td>To Kill a Mockingbird</td></tr>
-                  </tbody>
-                </table>
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>student_num</th><th>student_name</th><th>Tuition</th></tr><tr><td>1</td><td>Rashford</td><td>5400</td></tr><tr><td>2</td><td>Martial</td><td>5400</td></tr><tr><td>3</td><td>Greenwood</td><td>4050</td></tr><tr><td>4</td><td>Lingard</td><td>2700</td></tr><tr><td>5</td><td>Chong</td><td>1350</td></tr><tr><td>6</td><td>Mata</td><td>5400</td></tr><tr><td>7</td><td>Amy</td><td>1350</td></tr><tr><td>8</td><td>Christina</td><td>1350</td></tr><tr><td>9</td><td>Vicky</td><td>2700</td></tr><tr><td>10</td><td>Alice</td><td>2700</td></tr><tr><td>11</td><td>Emma</td><td>2700</td></tr><tr><td>12</td><td>Zoe</td><td>1350</td></tr><tr><td>13</td><td>Iris</td><td>1350</td></tr><tr><td>14</td><td>Williams</td><td>5400</td></tr><tr><td>15</td><td>Fosu-Mensah</td><td>4050</td></tr></tbody></table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -114,18 +105,7 @@
                 <h5 class="modal-title">Q2</h5>
               </div>
               <div class="modal-body" id="q2">
-                <table class="table table-striped table-bordered table-hover">
-                  <tbody>
-                    <tr><th>id</th><th>title</th><th>yr</th></tr>
-                    <tr><td>15</td><td>The Original Series： Star Trek</td><td>1966</td></tr>
-                    <tr><td>9</td><td>Star Trek: The Motion Picture</td><td>1979</td></tr>
-                    <tr><td>10</td><td>Star Trek II: The Wrath of Khan</td><td>1982</td></tr>
-                    <tr><td>11</td><td>Star Trek III: The Search for Spock</td><td>1984</td></tr>
-                    <tr><td>12</td><td>Star Trek IV: The Voyage Home</td><td>1986</td></tr>
-                    <tr><td>13</td><td>Star Trek V: The Final Frontier</td><td>1989</td></tr>
-                    <tr><td>13</td><td>Star Trek VI: The Undiscovered Country</td><td>1991</td></tr>
-                  </tbody>
-                </table>
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>student_num</th><th>student_name</th><th>GPA</th></tr><tr><td>4</td><td>Lingard</td><td>1.75</td></tr><tr><td>5</td><td>Chong</td><td>1.5</td></tr></tbody></table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -141,44 +121,7 @@
                 <h5 class="modal-title">Q3</h5>
               </div>
               <div class="modal-body" id="q3">
-                <table class="table table-striped table-bordered table-hover">
-                  <tbody>
-                    <tr><th>title</th></tr>
-                    <tr><td>Romeo + Juliet</td></tr>
-                    <tr><td>Titanic</td></tr>
-                    <tr><td>Catch Me If You Can</td></tr>
-                    <tr><td>Inception</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="q4_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Q4</h5>
-              </div>
-              <div class="modal-body" id="q4">
-                <table class="table table-striped table-bordered table-hover">
-                  <tbody>
-                    <tr><th>name</th></tr>
-                    <tr><td>Leonardo DiCaprio</td></tr>
-                    <tr><td>Christopher Walken</td></tr>
-                    <tr><td>Robin Wright</td></tr>
-                    <tr><td>Edward Burns</tr>
-                    <tr><td>Matt Damon</td></tr>
-                    <tr><td>Audrey Tautou</td></tr>
-                    <tr><td>Ian McKellen</td></tr>
-                    <tr><td>David Morse</td></tr>
-                    <tr><td>Aaron Eckhart</td></tr>
-                  </tbody>
-                </table>
+                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>department</th><th>total_women</th></tr><tr><td>MSIS</td><td>5</td></tr><tr><td>FIN</td><td>3</td></tr><tr><td>SCM</td><td>2</td></tr></tbody></table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -194,7 +137,7 @@
           <h4>Input your SQL code here:</h4>
           <form>
             <div class="form-group">
-              <textarea id="sql" class="form-control">SELECT * FROM movie;</textarea>
+              <textarea id="sql" class="form-control">SELECT * FROM students;</textarea>
               <button type="button" class="btn btn-primary" onclick="execute_sql()">Submit</button>
             </div>
           </form>
@@ -240,7 +183,7 @@
       var tm = Date.now();
       var db = new alasql.Database();
       alasql.options.errorlog = true;
-      $.get('exam.sql', function(data) {
+      $.get('practice2.sql', function(data) {
         document.getElementById('db_status').innerHTML = "The database is successfully loaded!";
         data.split(';').forEach(function (sql) {
           sql = sql.trim();
@@ -285,9 +228,6 @@
         })
         document.getElementById('result').innerHTML = s;
       };
-    </script>
-    <script>
-      
     </script>
   </body>
 </html>

@@ -33,9 +33,6 @@
       .result {
         border: 1px;
       }
-      .db_model {
-        width: 100%;
-      }
       pre.prettyprint {
         background-color: #eee;
       }
@@ -60,9 +57,9 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Introduction</a></li>
             <li><a href="class.html">Class</a></li>
-            <li class="active"><a href="practice1.html">Practice 1<span class="sr-only">(current)</span></a></li>
-            <li><a href="practice2.html">Practice 2</a></li>
-            <li><a href="exam.html">Exam</a></li>
+            <li><a href="final1.html">Final Exam 1</a></li>
+            <li><a href="final2.html">Final Exam 2</a></li>
+            <li class="active"><a href="exam2.html">Exam II<span class="sr-only">(current)</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://ryanqu.com">Powered by Yuan Qu</a></li>
@@ -73,20 +70,20 @@
     <div class="row">
       <div class="container">
         <h1>The Database Model</h1>
-        <img src="practice1.png" alt="" class="db_model img-thumbnail">
+        <img src="exam.png" alt="" class="db_model img-thumbnail">
         <p id="db_status">The databse and all the tables are created.</p>
         <p>First, you could use <code>SHOW tables;</code> to check the existing tables, and then <code>SELECT * FROM ...</code> to see the data records.</p>
-        <p>Note that the field <code>UnitsOnOrder</code> in the <code>products</code> table is the product’s total number of units on order from suppliers, whereas the <code>Quantity</code> field in <code>products_orders</code> tables indicates the number of units of a product in a particular customer order. The <code>ProductUnitPrice</code> field in the <code>product</code> table is the price charged to customers. The <code>OrderDate</code> field in the <code>orders</code> table contains only a date, not a specific time of day.</p>
         <h3>Questions:</h3>
-        <p><strong>Q1. </strong>The operations group has requested report showing, for each product, the difference between the number of units in stock and the reorder level; in particular, negative values of this difference indicate products that need to be reordered. To satisfy their request, write a SQL query that shows the name of each product, the unit price, the number of units in stock, the reorder level, and the difference between the units in stock and reorder level (named “UnitStatus”). Sort the results alphabetically by product name. 
+        <p><strong>Q1. </strong>List the films where the <code>yr</code> is <code>1962</code> [Show id, title]. 
           <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button>
         </p>
         
-        <p><strong>Q2. </strong>The HR department is preparing for the “employee of the week” event, and has asked for a list of sales reps, showing each sales rep’s total number of orders logged in the week of <code>2021-01-15</code>. Create a query that shows each sales rep’s total number of orders for the week <code>2021-01-15</code> ~ <code>2021-01-22</code> (named “TotalOrders”), the sale rep’s ID, and their full name. Order the output by the total number of orders, largest first.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
-        <div class="alert alert-danger" role="alert">Use <code>`TotalOrderAmount`</code> instead of <code>TotalOrderAmount</code> in your query, an unexpected error may occur here. </div>
+        <p><strong>Q2. </strong>List all of the <code>Star Trek</code> movies, include the <code>id</code>, <code>title</code> and <code>yr</code> (all of these movies include the words <code>Star Trek</code> in the <code>title</code>). Order results by year.
+          <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button>
+        </p>
         
-        <p><strong>Q3. </strong>The accounting department would like to determine the value of inventory currently on order from suppliers, itemized by product. Create a query that shows the name of each product, its unit price, the number of units on order from suppliers, and the total dollar value of the units on order (called “ValueOnOrder”). Products which currently have zero units on order from suppliers should not appear in the query output. The value of each unit on order is considered to be the same as the corresponding ProductUnitPrice charged to customers.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
-        <p><strong>Q4: </strong>In order to identify “slow moving” products, the marketing department would like report a showing all products that have accumulated $1000 or less in total customer orders. Create a query that shows, for each such product, the product ID, the product name, and the total value of customer orders. Products which have never been ordered by customers do not have to appear in the query output.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q4_modal"> Desired Result</button></p>
+        <p><strong>Q3. </strong>List the films in which <code>Leonardo DiCaprio</code> has appeared.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
+        <p><strong>Q4: </strong>List all the people who have worked with <code>Tom Hanks</code>.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q4_modal"> Desired Result</button></p>
 
         <div class="modal fade" id="q1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -95,7 +92,13 @@
                 <h5 class="modal-title">Q1</h5>
               </div>
               <div class="modal-body" id="q1">
-                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductName</th><th>ProductUnitPrice</th><th>UnitsInStock</th><th>ReorderLevel</th><th>UnitStatus</th></tr><tr><td>Apple</td><td>1.49</td><td>100</td><td>50</td><td>50</td></tr><tr><td>Banana</td><td>0.69</td><td>50</td><td>50</td><td>0</td></tr><tr><td>Cherry</td><td>3.99</td><td>20</td><td>60</td><td>-40</td></tr><tr><td>Computer</td><td>99.99</td><td>100</td><td>100</td><td>0</td></tr><tr><td>Donut</td><td>0.99</td><td>40</td><td>40</td><td>0</td></tr><tr><td>Egg</td><td>1.99</td><td>50</td><td>50</td><td>0</td></tr><tr><td>Fries</td><td>4.99</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Grape</td><td>3.99</td><td>100</td><td>0</td><td>100</td></tr><tr><td>Hat</td><td>12.99</td><td>10</td><td>10</td><td>0</td></tr><tr><td>Ink</td><td>4.99</td><td>20</td><td>0</td><td>20</td></tr><tr><td>Jacket</td><td>29.99</td><td>20</td><td>0</td><td>20</td></tr><tr><td>Kimchi</td><td>5.99</td><td>40</td><td>0</td><td>40</td></tr><tr><td>Lasagne</td><td>5.99</td><td>100</td><td>50</td><td>50</td></tr></tbody></table>
+                <table class="table table-striped table-bordered table-hover">
+                  <tbody>
+                    <tr><th>id</th><th>title</th></tr>
+                    <tr><td>6</td><td>The Longest Day</td></tr>
+                    <tr><td>7</td><td>To Kill a Mockingbird</td></tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,7 +114,18 @@
                 <h5 class="modal-title">Q2</h5>
               </div>
               <div class="modal-body" id="q2">
-                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>TotalOrders</th><th>SalesRepID</th><th>FirstName</th><th>LastName</th></tr><tr><td>2</td><td>2014</td><td>Jesse</td><td>Lingard</td></tr><tr><td>2</td><td>2027</td><td>Alex</td><td>Telles</td></tr><tr><td>1</td><td>2017</td><td>Bruno</td><td>Fernandes</td></tr><tr><td>1</td><td>2021</td><td>Daniel</td><td>James</td></tr><tr><td>1</td><td>2029</td><td>Aaron</td><td>Wan-Bissaka</td></tr><tr><td>1</td><td>2033</td><td>Brandon</td><td>Williams</td></tr></tbody></table>
+                <table class="table table-striped table-bordered table-hover">
+                  <tbody>
+                    <tr><th>id</th><th>title</th><th>yr</th></tr>
+                    <tr><td>15</td><td>The Original Series： Star Trek</td><td>1966</td></tr>
+                    <tr><td>9</td><td>Star Trek: The Motion Picture</td><td>1979</td></tr>
+                    <tr><td>10</td><td>Star Trek II: The Wrath of Khan</td><td>1982</td></tr>
+                    <tr><td>11</td><td>Star Trek III: The Search for Spock</td><td>1984</td></tr>
+                    <tr><td>12</td><td>Star Trek IV: The Voyage Home</td><td>1986</td></tr>
+                    <tr><td>13</td><td>Star Trek V: The Final Frontier</td><td>1989</td></tr>
+                    <tr><td>13</td><td>Star Trek VI: The Undiscovered Country</td><td>1991</td></tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -127,7 +141,15 @@
                 <h5 class="modal-title">Q3</h5>
               </div>
               <div class="modal-body" id="q3">
-                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductName</th><th>ProductUnitPrice</th><th>UnitsOnOrder</th><th>ValueOnOrder</th></tr><tr><td>Apple</td><td>1.49</td><td>20</td><td>29.8</td></tr><tr><td>Banana</td><td>0.69</td><td>50</td><td>34.5</td></tr><tr><td>Cherry</td><td>3.99</td><td>40</td><td>159.6</td></tr><tr><td>Donut</td><td>0.99</td><td>20</td><td>19.8</td></tr><tr><td>Egg</td><td>1.99</td><td>50</td><td>99.5</td></tr><tr><td>Grape</td><td>3.99</td><td>50</td><td>199.5</td></tr><tr><td>Ink</td><td>4.99</td><td>20</td><td>99.8</td></tr><tr><td>Jacket</td><td>29.99</td><td>60</td><td>1799.4</td></tr><tr><td>Lasagne</td><td>5.99</td><td>50</td><td>299.5</td></tr></tbody></table>
+                <table class="table table-striped table-bordered table-hover">
+                  <tbody>
+                    <tr><th>title</th></tr>
+                    <tr><td>Romeo + Juliet</td></tr>
+                    <tr><td>Titanic</td></tr>
+                    <tr><td>Catch Me If You Can</td></tr>
+                    <tr><td>Inception</td></tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -143,7 +165,20 @@
                 <h5 class="modal-title">Q4</h5>
               </div>
               <div class="modal-body" id="q4">
-                <table class="table table-striped table-bordered table-hover"><tbody><tr><th>ProductID</th><th>ProductName</th><th>TotalOrderAmount</th></tr><tr><td>8001</td><td>Apple</td><td>22.35</td></tr><tr><td>8002</td><td>Banana</td><td>6.9</td></tr><tr><td>8003</td><td>Cherry</td><td>15.96</td></tr><tr><td>8004</td><td>Donut</td><td>5.94</td></tr><tr><td>8005</td><td>Egg</td><td>17.91</td></tr><tr><td>8006</td><td>Fries</td><td>29.94</td></tr><tr><td>8007</td><td>Grape</td><td>31.92</td></tr><tr><td>8008</td><td>Hat</td><td>25.98</td></tr><tr><td>8009</td><td>Ink</td><td>19.96</td></tr><tr><td>8010</td><td>Jacket</td><td>29.99</td></tr><tr><td>8012</td><td>Lasagne</td><td>5.99</td></tr></tbody></table>
+                <table class="table table-striped table-bordered table-hover">
+                  <tbody>
+                    <tr><th>name</th></tr>
+                    <tr><td>Leonardo DiCaprio</td></tr>
+                    <tr><td>Christopher Walken</td></tr>
+                    <tr><td>Robin Wright</td></tr>
+                    <tr><td>Edward Burns</tr>
+                    <tr><td>Matt Damon</td></tr>
+                    <tr><td>Audrey Tautou</td></tr>
+                    <tr><td>Ian McKellen</td></tr>
+                    <tr><td>David Morse</td></tr>
+                    <tr><td>Aaron Eckhart</td></tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -159,7 +194,7 @@
           <h4>Input your SQL code here:</h4>
           <form>
             <div class="form-group">
-              <textarea id="sql" class="form-control">SELECT * FROM customers;</textarea>
+              <textarea id="sql" class="form-control">SELECT * FROM movie;</textarea>
               <button type="button" class="btn btn-primary" onclick="execute_sql()">Submit</button>
             </div>
           </form>
@@ -205,7 +240,7 @@
       var tm = Date.now();
       var db = new alasql.Database();
       alasql.options.errorlog = true;
-      $.get('practice1.sql', function(data) {
+      $.get('exam.sql', function(data) {
         document.getElementById('db_status').innerHTML = "The database is successfully loaded!";
         data.split(';').forEach(function (sql) {
           sql = sql.trim();
