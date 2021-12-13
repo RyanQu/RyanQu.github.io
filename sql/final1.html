@@ -60,9 +60,9 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Introduction</a></li>
             <li><a href="class.html">Class</a></li>
-            <li class="active"><a href="final1.html">Final Exam 1<span class="sr-only">(current)</span></a></li>
-            <li><a href="final2.html">Final Exam 2</a></li>
             <li><a href="exam2.html">Exam II</a></li>
+            <li class="active"><a href="final1.html">Final SQL 1<span class="sr-only">(current)</span></a></li>
+            <li><a href="final2.html">Final SQL 2</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://ryanqu.com">Powered by Yuan Qu</a></li>
@@ -77,16 +77,15 @@
         <p id="db_status">The databse and all the tables are created.</p>
         <p>First, you could use <code>SHOW tables;</code> to check the existing tables, and then <code>SELECT * FROM ...</code> to see the data records.</p>
         <p>Note that the field <code>UnitsOnOrder</code> in the <code>products</code> table is the product’s total number of units on order from suppliers, whereas the <code>Quantity</code> field in <code>products_orders</code> tables indicates the number of units of a product in a particular customer order. The <code>ProductUnitPrice</code> field in the <code>product</code> table is the price charged to customers. The <code>OrderDate</code> field in the <code>orders</code> table contains only a date, not a specific time of day.</p>
+        <h3><strong>This platform will not save any information, once refresh, everything clears. Please copy your code into the answer book</strong></h3>
         <h3>Questions:</h3>
-        <p><strong>Q1. </strong>The operations group has requested report showing, for each product, the difference between the number of units in stock and the reorder level; in particular, negative values of this difference indicate products that need to be reordered. To satisfy their request, write a SQL query that shows the name of each product, the unit price, the number of units in stock, the reorder level, and the difference between the units in stock and reorder level (named “UnitStatus”). Sort the results alphabetically by product name. 
-          <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button>
+        <p><strong>Q1. <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button>
         </p>
-        
-        <p><strong>Q2. </strong>The HR department is preparing for the “employee of the week” event, and has asked for a list of sales reps, showing each sales rep’s total number of orders logged in the week of <code>2021-01-15</code>. Create a query that shows each sales rep’s total number of orders for the week <code>2021-01-15</code> ~ <code>2021-01-22</code> (named “TotalOrders”), the sale rep’s ID, and their full name. Order the output by the total number of orders, largest first.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
+        <p><strong>Q2. </strong><button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
         <div class="alert alert-danger" role="alert">Use <code>`TotalOrderAmount`</code> instead of <code>TotalOrderAmount</code> in your query, an unexpected error may occur here. </div>
         
-        <p><strong>Q3. </strong>The accounting department would like to determine the value of inventory currently on order from suppliers, itemized by product. Create a query that shows the name of each product, its unit price, the number of units on order from suppliers, and the total dollar value of the units on order (called “ValueOnOrder”). Products which currently have zero units on order from suppliers should not appear in the query output. The value of each unit on order is considered to be the same as the corresponding ProductUnitPrice charged to customers.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
-        <p><strong>Q4: </strong>In order to identify “slow moving” products, the marketing department would like report a showing all products that have accumulated $1000 or less in total customer orders. Create a query that shows, for each such product, the product ID, the product name, and the total value of customer orders. Products which have never been ordered by customers do not have to appear in the query output.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q4_modal"> Desired Result</button></p>
+        <p><strong>Q3. </strong><button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
+        <p><strong>Q4: </strong><button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q4_modal"> Desired Result</button></p>
 
         <div class="modal fade" id="q1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

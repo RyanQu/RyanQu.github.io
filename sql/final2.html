@@ -60,9 +60,9 @@
           <ul class="nav navbar-nav">
             <li><a href="index.html">Introduction</a></li>
             <li><a href="class.html">Class</a></li>
-            <li><a href="final1.html">Final Exam 1</a></li>
-            <li class="active"><a href="final2.html">Final Exam 2<span class="sr-only">(current)</span></a></li>
             <li><a href="exam2.html">Exam II</a></li>
+            <li><a href="final1.html">Final SQL 1</a></li>
+            <li class="active"><a href="final2.html">Final SQL 2<span class="sr-only">(current)</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://ryanqu.com">Powered by Yuan Qu</a></li>
@@ -76,11 +76,12 @@
         <img src="practice2.png" alt="" class="db_model img-thumbnail">
         <p id="db_status">The databse and all the tables are created.</p>
         <p>First, you could use <code>SHOW tables;</code> to check the existing tables, and then <code>SELECT * FROM ...</code> to see the data records.</p>
-        <p>For the following questions, refer to the above database, which shows college enrollments for a single semester. The gender field in the Students table contains “M” for males and “F” for females, and the grade field in the Enrolls table contains a numerical grade, such as 4.0 for an “A”, 3.0 for a “B”, and so forth. Departments in the Courses table are identified by their names, which are unique.</p>
+        <p>The database shows college enrollments for a single semester. The gender field in the Students table contains “M” for males and “F” for females, and the grade field in the Enrolls table contains a numerical grade, such as 4.0 for an “A”, 3.0 for a “B”, etc. Departments in the Courses table are identified by their names, which are unique.</p>
+        <h3><strong>This platform will not save any information, once refresh, everything clears. Please copy your code into the answer book</strong></h3>
         <h3>Questions:</h3>
-        <p><strong>Q1. </strong>Assuming a fee of $450 per credit, write a SQL query to calculate each student’s tuition. It should show each student’s student number, name, and total tuition for the semester.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button></p>
-        <p><strong>Q2. </strong>Write a SQL query to find all students whose GPA’s are below 2. number, name, and GPA for each such student.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
-        <p><strong>Q3. </strong>Write a SQL query to find the number of female enrollments in each department. The same woman signing up for two different courses in the same department counts as two separate enrollments. The query should show the name of each department and its number of female enrollments, and it should be sorted from largest to smallest number of enrollments, largest first.<button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
+        <p><strong>Q1. <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q1_modal"> Desired Result</button></p>
+        <p><strong>Q2. <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q2_modal"> Desired Result</button></p>
+        <p><strong>Q3. <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#q3_modal"> Desired Result</button></p>
 
         <div class="modal fade" id="q1_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
