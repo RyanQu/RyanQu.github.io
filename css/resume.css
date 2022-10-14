@@ -83,6 +83,19 @@ p.lead {
   color: #BD5D38;
 }
 
+#cat{
+  background: url('../cat.jpg') no-repeat 0px 0px;
+  width: 150px;
+  position: relative;
+  z-index: 22;
+  border: 2px solid black;
+  display: none;
+}
+
+a:hover #cat{
+  display: block;
+}
+
 #sideNav .navbar-nav .nav-item .nav-link {
   font-weight: 800;
   letter-spacing: 0.05rem;
