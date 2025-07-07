@@ -24,8 +24,11 @@ $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
+$scarlet: #cc0033 !default;
+$hku:     #024638 !default;
+$oriblue: #0083B0 !default;
 
-$primary:       $orange !default;
+$primary:       $oriblue !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -36,4 +39,4 @@ $dark:          $gray-800 !default;
 
 // Page Variables
 
-$sidebar-base-width: 17rem;
+$sidebar-base-width: 22rem;
