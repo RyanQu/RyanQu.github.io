@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1999年深圳报童模拟</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .story-section {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #0d6efd;
+        }
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        .history-table {
+            font-size: 0.9rem;
+        }
+        .card-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        /* .cost-details {
+            font-size: 0.9rem;
+            color: #6c757d;
+        } */
+        .analysis-report {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .analysis-report:hover {
+            background-color: #f8f9fa;
+        }
+        #chart-container {
+            height: 300px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-4 game-container">
+        <header class="text-center mb-4">
+            <h1 class="text-primary">1999年深圳报童模拟</h1>
+            <p class="lead">迎接新千年，在深圳特区开启你的创业之路（卖报纸）</p>
+        </header>
+        
+        <div class="story-section mb-4">
+            <h5 class="text-primary">故事背景</h5>
+            <p>1999年国庆节，正值新中国成立50周年大庆，你怀揣梦想南下深圳打拼。这个改革开放的前沿城市充满了机遇与挑战，你决定从最基础的卖报纸开始你的创业之路。</p>
+            <p>每天清晨，你需要从报社批发报纸，然后在深圳的繁华街头叫卖。你需要应对多变的天气、突发新闻事件，以及各种意想不到的挑战。注意：卖不完的报纸到新的一天就没有任何价值了，只好拿去糊墙……</p>
+            <p class="mb-0">你的目标：通过聪明的订货决策，在50天内尽可能赚取更多利润，迎接新千年的到来！</p>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">当前资金</h5>
+                        <div class="card-value text-success" id="money">100.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">天数</h5>
+                        <div class="card-value text-primary" id="day">1/50</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="row">
+                            <div class="col-md-3 mb-2">
+                                <h5 class="card-title">成本/份</h5>
+                                <div class="card-value text-danger" id="cost">0.60</div>
+                                <!-- <div class="cost-details" id="cost-details">(进货成本: 0.60)</div> -->
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <h5 class="card-title">售价/份</h5>
+                                <div class="card-value text-success" id="price">1.00</div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <h5 class="card-title">库存成本/份</h5>
+                                <div class="card-value text-warning" id="storage-cost">0.00</div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <h5 class="card-title">失客成本/份</h5>
+                                <div class="card-value text-info" id="lost-customer-cost">0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4 shadow-sm" id="order-section">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">今日订单决策</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">请输入您今天想要订购的报纸数量：</p>
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <button class="btn btn-outline-primary" id="decrease">-</button>
+                    <input type="number" class="form-control mx-3 text-center" id="order-quantity" min="0" value="0" style="max-width: 120px;">
+                    <button class="btn btn-outline-primary" id="increase">+</button>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary btn-lg" id="submit-order">提交订单</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4 shadow-sm d-none" id="results-section">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">今日结果</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="card event-card" id="event-card">
+                            <div class="card-body">
+                                <h5 class="card-title">今日事件</h5>
+                                <p class="card-text fw-bold" id="event-type">风和日丽的晴天</p>
+                                <p class="card-text" id="demand">需求: 100</p>
+                                <p class="card-text fst-italic" id="event-description">今天天气很好，街上行人很多，报纸应该很好卖！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">订购数量</h6>
+                                <p class="card-text fs-4" id="ordered">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">实际售出</h6>
+                                <p class="card-text fs-4" id="sold">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">库存成本</h6>
+                                <p class="card-text fs-4" id="leftover">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">失客数量</h6>
+                                <p class="card-text fs-4" id="lost-customers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">订购成本</h6>
+                                <p class="card-text fs-5" id="order-cost">0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">销售收入</h6>
+                                <p class="card-text fs-5" id="sales-revenue">0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">失客成本</h6>
+                                <p class="card-text fs-5" id="lost-revenue">0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">当日利润</h6>
+                                <p class="card-text fs-5" id="daily-profit">0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-success btn-lg" id="next-day">进入下一天</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm" id="analysis-section" style="display: none;">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">数据分析</h5>
+            </div>
+            <div class="card-body">
+                <p>发小的弟弟大学毕业来投靠你，可以为你做基本的数据分析，每次分析需要花费5元。</p>
+                <div class="row">
+                    <div class="text-center">
+                        <button class="btn btn-warning" id="analyze-data">花费5元进行数据分析</button>
+                    </div>
+                </div>
+                <div id="analysis-reports">
+                    <!-- 数据分析报告将在这里显示 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">历史记录</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover history-table">
+                        <thead>
+                            <tr>
+                                <th>天数</th>
+                                <th>事件</th>
+                                <th>订购量</th>
+                                <th>需求</th>
+                                <th>售出</th>
+                                <th>失客</th>
+                                <th>利润</th>
+                                <th>总资金</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- 历史记录将通过JavaScript动态添加 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 游戏结束模态框 -->
+    <div class="modal fade" id="game-over-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">游戏结束</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <h4 id="game-over-message"></h4>
+                    <p>最终资金: <span id="final-money" class="text-success">0</span></p>
+                    <p>经营天数: <span id="final-days">0</span></p>
+                    <p>记得报告你的最终资金哦！（重新开始后游戏会完全刷新，如需保存游戏记录，关闭弹窗后打印页面至 pdf 即可）</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" id="restart-game">重新开始</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 特殊事件模态框 -->
+    <div class="modal fade" id="special-event-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="special-event-header">
+                    <h5 class="modal-title" id="special-event-title">特殊事件</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <h4 id="special-event-message"></h4>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据分析模态框 -->
+    <div class="modal fade" id="analysis-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">数据分析报告</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="chart-container">
+                        <canvas id="analysis-chart"></canvas>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">订购量统计</div>
+                                <div class="card-body">
+                                    <p>平均数: <span id="order-mean"></span></p>
+                                    <p>中位数: <span id="order-median"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">需求量统计</div>
+                                <div class="card-body">
+                                    <p>平均数: <span id="demand-mean"></span></p>
+                                    <p>中位数: <span id="demand-median"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 游戏配置和数据
+        const gameConfig = {
+            initialMoney: 100,
+            baseCostPerUnit: 0.6,
+            storageCostPerUnit: 0.0,
+            costPerUnit: 0.6,
+            pricePerUnit: 1.0,
+            lostCustomerCost: 0.0,
+            totalDays: 50,
+            demandMultiplier: 1.0,
+            hasStorageCost: false,
+            hasCompetitor: false,
+            hasDataAnalyst: false,
+            specialEvents: {
+                storageCost: { day: 7, triggered: false },
+                competitor: { day: 20, triggered: false },
+                shenzhou: { startDay: 30, endDay: 40, triggered: false },
+                internet: { day: 40, triggered: false },
+                dataAnalyst: { day: 10, triggered: false }
+            },
+            events: [
+                { 
+                    type: "风和日丽的晴天", 
+                    description: "今天天气很好，街上行人很多，报纸应该很好卖！",
+                    demandMean: 150, 
+                    demandStd: 25, 
+                    probability: 0.3 
+                },
+                { 
+                    type: "普通晴天", 
+                    description: "天气不错，正常的工作日，人们照常买报纸。",
+                    demandMean: 120, 
+                    demandStd: 20, 
+                    probability: 0.2 
+                },
+                { 
+                    type: "不知怎的，天气热了起来", 
+                    description: "知了吱吱呀呀叫个不停，天气异常炎热，街上行人稀少。",
+                    demandMean: 80, 
+                    demandStd: 15, 
+                    probability: 0.1 
+                },
+                { 
+                    type: "细雨蒙蒙", 
+                    description: "下着小雨，有些人带了伞，有些人行色匆匆。",
+                    demandMean: 100, 
+                    demandStd: 20, 
+                    probability: 0.15 
+                },
+                { 
+                    type: "暴雨将至", 
+                    description: "黑云压城，暴雨即将来临，今天是不是不该出门？",
+                    demandMean: 60, 
+                    demandStd: 15, 
+                    probability: 0.1 
+                },
+                { 
+                    type: "下土了！太原的沙尘暴", 
+                    description: "太原的沙尘暴居然吹到了深圳，街上的人都戴着口罩行色匆匆。",
+                    demandMean: 40, 
+                    demandStd: 10, 
+                    probability: 0.05 
+                },
+                { 
+                    type: "深圳特区报大爆料", 
+                    description: "今天报纸上有重大新闻，人人都想先睹为快！",
+                    demandMean: 200, 
+                    demandStd: 30, 
+                    probability: 0.1 
+                }
+            ],
+            analysisReports: []
+        };
+
+        // 游戏状态
+        let gameState = {
+            currentDay: 1,
+            currentMoney: gameConfig.initialMoney,
+            orderQuantity: 0,
+            currentEvent: null,
+            currentDemand: 0,
+            history: []
+        };
+
+        // DOM元素引用
+        const moneyElement = document.getElementById('money');
+        const dayElement = document.getElementById('day');
+        const costElement = document.getElementById('cost');
+        // const costDetailsElement = document.getElementById('cost-details');
+        const priceElement = document.getElementById('price');
+        const storageCostElement = document.getElementById('storage-cost');
+        const lostCustomerCostElement = document.getElementById('lost-customer-cost');
+        const orderQuantityInput = document.getElementById('order-quantity');
+        const decreaseButton = document.getElementById('decrease');
+        const increaseButton = document.getElementById('increase');
+        const submitOrderButton = document.getElementById('submit-order');
+        const orderSection = document.getElementById('order-section');
+        const resultsSection = document.getElementById('results-section');
+        const analysisSection = document.getElementById('analysis-section');
+        const analyzeDataButton = document.getElementById('analyze-data');
+        const analysisReportsContainer = document.getElementById('analysis-reports');
+        const eventCard = document.getElementById('event-card');
+        const eventTypeElement = document.getElementById('event-type');
+        const eventDescriptionElement = document.getElementById('event-description');
+        const demandElement = document.getElementById('demand');
+        const orderedElement = document.getElementById('ordered');
+        const soldElement = document.getElementById('sold');
+        const leftoverElement = document.getElementById('leftover');
+        const lostCustomersElement = document.getElementById('lost-customers');
+        const orderCostElement = document.getElementById('order-cost');
+        const salesRevenueElement = document.getElementById('sales-revenue');
+        const lostRevenueElement = document.getElementById('lost-revenue');
+        const dailyProfitElement = document.getElementById('daily-profit');
+        const nextDayButton = document.getElementById('next-day');
+        const historyBody = document.getElementById('history-body');
+        const gameOverModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+        const specialEventModal = new bootstrap.Modal(document.getElementById('special-event-modal'));
+        const analysisModal = new bootstrap.Modal(document.getElementById('analysis-modal'));
+        const gameOverMessage = document.getElementById('game-over-message');
+        const finalMoneyElement = document.getElementById('final-money');
+        const finalDaysElement = document.getElementById('final-days');
+        const restartGameButton = document.getElementById('restart-game');
+        const specialEventTitle = document.getElementById('special-event-title');
+        const specialEventHeader = document.getElementById('special-event-header');
+        const specialEventMessage = document.getElementById('special-event-message');
+        let analysisChart = null;
+
+        // 初始化游戏
+        function initGame() {
+            gameState = {
+                currentDay: 1,
+                currentMoney: gameConfig.initialMoney,
+                orderQuantity: 0,
+                currentEvent: null,
+                currentDemand: 0,
+                history: []
+            };
+            
+            // 重置游戏配置
+            gameConfig.storageCostPerUnit = 0.0;
+            gameConfig.costPerUnit = 0.6;
+            gameConfig.lostCustomerCost = 0.0;
+            gameConfig.demandMultiplier = 1.0;
+            gameConfig.hasStorageCost = false;
+            gameConfig.hasCompetitor = false;
+            gameConfig.hasDataAnalyst = false;
+            gameConfig.analysisReports = [];
+            
+            // 重置特殊事件状态
+            gameConfig.specialEvents.storageCost.triggered = false;
+            gameConfig.specialEvents.competitor.triggered = false;
+            gameConfig.specialEvents.shenzhou.triggered = false;
+            gameConfig.specialEvents.internet.triggered = false;
+            gameConfig.specialEvents.dataAnalyst.triggered = false;
+            
+            updateUI();
+            orderSection.classList.remove('d-none');
+            resultsSection.classList.add('d-none');
+            analysisSection.style.display = 'none';
+            historyBody.innerHTML = '';
+            analysisReportsContainer.innerHTML = '';
+            storageCostElement.textContent = '0.00';
+            lostCustomerCostElement.textContent = '0.00';
+            // costDetailsElement.textContent = '(进货成本: 0.60)';
+        }
+
+        // 更新UI显示
+        function updateUI() {
+            moneyElement.textContent = gameState.currentMoney.toFixed(2);
+            dayElement.textContent = `${gameState.currentDay}/${gameConfig.totalDays}`;
+            costElement.textContent = gameConfig.costPerUnit.toFixed(2);
+            priceElement.textContent = gameConfig.pricePerUnit.toFixed(2);
+            orderQuantityInput.value = gameState.orderQuantity;
+            
+            // 检查是否触发特殊事件
+            checkSpecialEvents();
+            
+            // 检查是否显示数据分析部分
+            if (gameConfig.hasDataAnalyst) {
+                analysisSection.style.display = 'block';
+            }
+        }
+
+        // 检查特殊事件
+        function checkSpecialEvents() {
+            // 10天后触发库存成本事件
+            if (gameState.currentDay === gameConfig.specialEvents.storageCost.day && !gameConfig.specialEvents.storageCost.triggered) {
+                gameConfig.specialEvents.storageCost.triggered = true;
+                gameConfig.storageCostPerUnit = 0.1;
+                // gameConfig.costPerUnit = gameConfig.baseCostPerUnit + gameConfig.storageCostPerUnit;
+                gameConfig.hasStorageCost = true;
+                
+                showSpecialEventModal(
+                    "warning", 
+                    "⚠️ 新增库存成本！", 
+                    "在路口修自行车的王大爷对你有些不满意，你的报纸生意越做越好，他不愿意免费借给你三轮车放报纸了。以后每卖一张报纸要分他一毛钱。可恶的王大爷！"
+                );
+                
+                storageCostElement.textContent = gameConfig.storageCostPerUnit.toFixed(2);
+                // costDetailsElement.textContent = `(进货成本: ${gameConfig.baseCostPerUnit.toFixed(2)} + 库存成本: ${gameConfig.storageCostPerUnit.toFixed(2)})`;
+            }
+            
+            // 20天后触发竞争对手事件
+            if (gameState.currentDay === gameConfig.specialEvents.competitor.day && !gameConfig.specialEvents.competitor.triggered) {
+                gameConfig.specialEvents.competitor.triggered = true;
+                gameConfig.lostCustomerCost = 0.1;
+                gameConfig.hasCompetitor = true;
+                
+                showSpecialEventModal(
+                    "danger", 
+                    "⚠️ 出现竞争对手！", 
+                    "隔壁的小李偷偷跟踪你，发现你赚了不少钱，他也开始在街角卖报纸。你渐渐发现，在你这里买不到报纸的顾客，会去小李那里买……现在你有了失客成本！"
+                );
+                
+                lostCustomerCostElement.textContent = gameConfig.lostCustomerCost.toFixed(2);
+            }
+            
+            // 30-40天触发神舟一号事件
+            if (gameState.currentDay === gameConfig.specialEvents.shenzhou.startDay && !gameConfig.specialEvents.shenzhou.triggered) {
+                gameConfig.specialEvents.shenzhou.triggered = true;
+                gameConfig.demandMultiplier = 1.2;
+                
+                showSpecialEventModal(
+                    "info", 
+                    "🚀 神舟一号发射成功！", 
+                    "1999年11月20日，神舟一号飞船在酒泉卫星发射中心发射升空，大家对于航天新闻的热忱空前高涨，报纸需求量增加了20%！"
+                );
+            }
+            
+            // 40天后结束神舟一号事件，触发互联网事件
+            if (gameState.currentDay === gameConfig.specialEvents.internet.day && !gameConfig.specialEvents.internet.triggered) {
+                gameConfig.specialEvents.internet.triggered = true;
+                gameConfig.demandMultiplier = 0.5;
+                
+                showSpecialEventModal(
+                    "primary", 
+                    "📱 移动互联网兴起", 
+                    "随着新千年的临近，移动互联网开始出现并变得火热，人们获取新闻的方式多样化，大家买报纸的热情降低了，需求量减少了50%！"
+                );
+            }
+            
+            // 10天后触发数据分析师事件
+            if (gameState.currentDay === gameConfig.specialEvents.dataAnalyst.day && !gameConfig.specialEvents.dataAnalyst.triggered && gameState.history.length >= 10) {
+                gameConfig.specialEvents.dataAnalyst.triggered = true;
+                gameConfig.hasDataAnalyst = true;
+                
+                showSpecialEventModal(
+                    "success", 
+                    "📊 数据分析师加入！", 
+                    "发小的弟弟大学毕业来投靠你，他在大学学的是统计学，可以为你做基本的数据分析，帮助你更好地预测报纸需求。"
+                );
+            }
+            
+            // 40天后结束神舟一号事件
+            if (gameState.currentDay === gameConfig.specialEvents.shenzhou.endDay + 1 && gameConfig.specialEvents.shenzhou.triggered) {
+                gameConfig.demandMultiplier = 1.0;
+            }
+        }
+
+        // 显示特殊事件模态框
+        function showSpecialEventModal(type, title, message) {
+            specialEventHeader.className = `modal-header bg-${type} text-white`;
+            specialEventTitle.textContent = title;
+            specialEventMessage.textContent = message;
+            specialEventModal.show();
+        }
+
+        // 生成随机事件和需求
+        function generateEventAndDemand() {
+            // 随机选择事件类型
+            const rand = Math.random();
+            let cumulativeProb = 0;
+            
+            for (const event of gameConfig.events) {
+                cumulativeProb += event.probability;
+                if (rand <= cumulativeProb) {
+                    gameState.currentEvent = event;
+                    break;
+                }
+            }
+            
+            // 生成正态分布的需求（使用Box-Muller变换）
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            let demand = Math.max(0, Math.round(gameState.currentEvent.demandMean + gameState.currentEvent.demandStd * z));
+            
+            // 应用需求乘数
+            demand = Math.round(demand * gameConfig.demandMultiplier);
+            gameState.currentDemand = demand;
+            
+            return {
+                event: gameState.currentEvent,
+                demand: gameState.currentDemand
+            };
+        }
+
+        // 计算当日结果
+        function calculateDailyResults() {
+            const orderQuantity = gameState.orderQuantity;
+            const demand = gameState.currentDemand;
+            
+            // 计算售出数量和剩余库存
+            const sold = Math.min(orderQuantity, demand);
+            const leftover = orderQuantity*gameConfig.storageCostPerUnit;
+            
+            // 计算失客数量（只有出现竞争对手后才有）
+            let lostCustomers = 0;
+            if (gameConfig.hasCompetitor) {
+                lostCustomers = Math.max(0, demand - orderQuantity);
+            }
+            
+            // 计算成本和收入
+            const orderCost = orderQuantity * gameConfig.costPerUnit;
+
+            const salesRevenue = sold * gameConfig.pricePerUnit;
+            const lostRevenue = lostCustomers * gameConfig.lostCustomerCost;
+            const dailyProfit = salesRevenue - orderCost - lostRevenue - leftover;
+            
+            // 更新资金
+            gameState.currentMoney += dailyProfit;
+            
+            return {
+                sold,
+                leftover,
+                lostCustomers,
+                orderCost,
+                salesRevenue,
+                lostRevenue,
+                dailyProfit
+            };
+        }
+
+        // 显示当日结果
+        function showResults() {
+            const results = calculateDailyResults();
+            
+            // 设置事件卡片样式
+            eventCard.className = 'card event-card';
+            
+            eventTypeElement.textContent = gameState.currentEvent.type;
+            eventDescriptionElement.textContent = gameState.currentEvent.description;
+            demandElement.textContent = `需求: ${gameState.currentDemand}`;
+            orderedElement.textContent = gameState.orderQuantity;
+            soldElement.textContent = results.sold;
+            leftoverElement.textContent = results.leftover;
+            lostCustomersElement.textContent = results.lostCustomers;
+            orderCostElement.textContent = results.orderCost.toFixed(2);
+            salesRevenueElement.textContent = results.salesRevenue.toFixed(2);
+            lostRevenueElement.textContent = results.lostRevenue.toFixed(2);
+            
+            // 设置利润颜色
+            dailyProfitElement.textContent = results.dailyProfit.toFixed(2);
+            dailyProfitElement.className = 'card-text fs-5 ';
+            dailyProfitElement.classList.add(results.dailyProfit >= 0 ? 'text-success' : 'text-danger');
+            
+            // 隐藏订单部分，显示结果部分
+            orderSection.classList.add('d-none');
+            resultsSection.classList.remove('d-none');
+            
+            // 添加到历史记录
+            addToHistory(results);
+            
+            // 检查游戏是否结束
+            if (gameState.currentMoney <= 0) {
+                showGameOver("破产了！您的资金已耗尽。");
+            } else if (gameState.currentDay >= gameConfig.totalDays) {
+                showGameOver("恭喜！您成功完成了50天的经营。");
+            }
+        }
+
+        // 添加到历史记录
+        function addToHistory(results) {
+            const historyEntry = {
+                day: gameState.currentDay,
+                event: gameState.currentEvent.type,
+                orderQuantity: gameState.orderQuantity,
+                demand: gameState.currentDemand,
+                sold: results.sold,
+                lostCustomers: results.lostCustomers,
+                profit: results.dailyProfit,
+                totalMoney: gameState.currentMoney
+            };
+            
+            gameState.history.push(historyEntry);
+            
+            // 更新历史表格
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${historyEntry.day}</td>
+                <td>${historyEntry.event}</td>
+                <td>${historyEntry.orderQuantity}</td>
+                <td>${historyEntry.demand}</td>
+                <td>${historyEntry.sold}</td>
+                <td>${historyEntry.lostCustomers}</td>
+                <td class="${historyEntry.profit >= 0 ? 'text-success' : 'text-danger'}">${historyEntry.profit.toFixed(2)}</td>
+                <td>${historyEntry.totalMoney.toFixed(2)}</td>
+            `;
+            
+            historyBody.appendChild(row);
+            
+            // 检查是否触发数据分析师事件
+            if (gameState.history.length >= 14 && !gameConfig.specialEvents.dataAnalyst.triggered) {
+                gameConfig.specialEvents.dataAnalyst.triggered = true;
+                gameConfig.hasDataAnalyst = true;
+                
+                showSpecialEventModal(
+                    "success", 
+                    "📊 数据分析师加入！", 
+                    "发小的弟弟大学毕业来投靠你，他在大学学的是统计学，可以为你做基本的数据分析，帮助你更好地预测报纸需求。"
+                );
+            }
+        }
+
+        // 显示游戏结束模态框
+        function showGameOver(message) {
+            gameOverMessage.textContent = message;
+            finalMoneyElement.textContent = gameState.currentMoney.toFixed(2);
+            finalDaysElement.textContent = gameState.currentDay;
+            gameOverModal.show();
+        }
+
+        // 计算数组的平均数
+        function calculateMean(arr) {
+            if (arr.length === 0) return 0;
+            const sum = arr.reduce((a, b) => a + b, 0);
+            return sum / arr.length;
+        }
+
+        // 计算数组的中位数
+        function calculateMedian(arr) {
+            if (arr.length === 0) return 0;
+            const sorted = [...arr].sort((a, b) => a - b);
+            const middle = Math.floor(sorted.length / 2);
+            
+            if (sorted.length % 2 === 0) {
+                return (sorted[middle - 1] + sorted[middle]) / 2;
+            }
+            
+            return sorted[middle];
+        }
+
+        // 执行数据分析
+        function performDataAnalysis() {
+            if (gameState.currentMoney < 5) {
+                alert("资金不足！数据分析需要5元。");
+                return;
+            }
+            
+            // 扣除分析费用
+            gameState.currentMoney -= 5;
+            moneyElement.textContent = gameState.currentMoney.toFixed(2);
+            
+            // 提取历史数据
+            const days = gameState.history.map(entry => entry.day);
+            const orders = gameState.history.map(entry => entry.orderQuantity);
+            const demands = gameState.history.map(entry => entry.demand);
+            
+            // 计算统计量
+            const orderMean = calculateMean(orders).toFixed(2);
+            const orderMedian = calculateMedian(orders).toFixed(2);
+            const demandMean = calculateMean(demands).toFixed(2);
+            const demandMedian = calculateMedian(demands).toFixed(2);
+            
+            // 创建分析报告
+            const reportId = `report-${Date.now()}`;
+            const report = {
+                id: reportId,
+                date: gameState.currentDay,
+                orderMean,
+                orderMedian,
+                demandMean,
+                demandMedian
+            };
+            
+            gameConfig.analysisReports.push(report);
+            
+            // 显示分析报告
+            showAnalysisReport(report, days, orders, demands);
+            
+            // 添加报告到列表
+            addReportToList(report);
+        }
+
+        // 显示分析报告
+        function showAnalysisReport(report, days, orders, demands) {
+            // 更新统计信息
+            document.getElementById('order-mean').textContent = report.orderMean;
+            document.getElementById('order-median').textContent = report.orderMedian;
+            document.getElementById('demand-mean').textContent = report.demandMean;
+            document.getElementById('demand-median').textContent = report.demandMedian;
+            
+            // 销毁现有图表（如果存在）
+            if (analysisChart) {
+                analysisChart.destroy();
+            }
+            
+            // 创建新图表
+            const ctx = document.getElementById('analysis-chart').getContext('2d');
+            analysisChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: days,
+                    datasets: [
+                        {
+                            label: '订购量',
+                            data: orders,
+                            borderColor: 'rgb(54, 162, 235)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            tension: 0.1,
+                            fill: false
+                        },
+                        {
+                            label: '需求量',
+                            data: demands,
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            tension: 0.1,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // 显示模态框
+            analysisModal.show();
+        }
+
+        // 添加报告到列表
+        function addReportToList(report) {
+            const reportElement = document.createElement('div');
+            reportElement.className = 'card mb-2 analysis-report';
+            reportElement.innerHTML = `
+                <div class="card-body">
+                    <h6 class="card-title">数据分析报告 (第${report.date}天)</h6>
+                    <p class="card-text mb-1">订购量: 平均 ${report.orderMean}, 中位数 ${report.orderMedian}</p>
+                    <p class="card-text">需求量: 平均 ${report.demandMean}, 中位数 ${report.demandMedian}</p>
+                </div>
+            `;
+            
+            // 点击报告可以再次查看
+            reportElement.addEventListener('click', () => {
+                const days = gameState.history.map(entry => entry.day);
+                const orders = gameState.history.map(entry => entry.orderQuantity);
+                const demands = gameState.history.map(entry => entry.demand);
+                showAnalysisReport(report, days, orders, demands);
+            });
+            
+            analysisReportsContainer.appendChild(reportElement);
+        }
+
+        // 事件监听器
+        decreaseButton.addEventListener('click', () => {
+            const currentValue = parseInt(orderQuantityInput.value) || 0;
+            if (currentValue > 0) {
+                orderQuantityInput.value = currentValue - 1;
+                gameState.orderQuantity = currentValue - 1;
+            }
+        });
+
+        increaseButton.addEventListener('click', () => {
+            const currentValue = parseInt(orderQuantityInput.value) || 0;
+            orderQuantityInput.value = currentValue + 1;
+            gameState.orderQuantity = currentValue + 1;
+        });
+
+        orderQuantityInput.addEventListener('input', () => {
+            const value = parseInt(orderQuantityInput.value) || 0;
+            if (value >= 0) {
+                gameState.orderQuantity = value;
+            }
+        });
+
+        submitOrderButton.addEventListener('click', () => {
+            // 检查是否有足够的资金支付订单
+            const orderCost = gameState.orderQuantity * gameConfig.costPerUnit;
+            if (orderCost > gameState.currentMoney) {
+                alert(`资金不足！您的订单需要 ${orderCost.toFixed(2)}，但您只有 ${gameState.currentMoney.toFixed(2)}。`);
+                return;
+            }
+            
+            // 生成当日事件和需求
+            generateEventAndDemand();
+            
+            // 显示结果
+            showResults();
+        });
+
+        nextDayButton.addEventListener('click', () => {
+            gameState.currentDay++;
+            gameState.orderQuantity = 0;
+            updateUI();
+            resultsSection.classList.add('d-none');
+            orderSection.classList.remove('d-none');
+        });
+
+        analyzeDataButton.addEventListener('click', performDataAnalysis);
+
+        restartGameButton.addEventListener('click', () => {
+            gameOverModal.hide();
+            initGame();
+        });
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>
